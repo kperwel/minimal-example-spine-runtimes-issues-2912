@@ -18,8 +18,8 @@ document.querySelectorAll(".debug-button").forEach((btn) => {
 (async () => {
     await app.init({ background: 0xaa4444, resizeTo: window });
     document.getElementById("pixi-container")!.appendChild(app.canvas);
-    Assets.add({ alias: "skeletonData", src: "/skeleton.json" });
-    Assets.add({ alias: "skeletonAtlas", src: "/skeleton.atlas" });
+    Assets.add({ alias: "skeletonData", src: "./skeleton.json" });
+    Assets.add({ alias: "skeletonAtlas", src: "./skeleton.atlas" });
     await Assets.load(["skeletonData", "skeletonAtlas"]);
     let bunnies: Array<Spine> = [];
 
