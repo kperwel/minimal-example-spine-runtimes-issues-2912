@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/style.css">
+    <title>@esotericsoftware/spine-pixi-v8 (4.2.90)</title>
+  <script type="module" crossorigin src="/assets/index-CJ22-Tty.js"></script>
+</head>
+
+<body>
+    <details class="comment">
+        <summary>[Click to see description]</summary>
+        <p>
+This project simulates a complex Spine scene:
+
+* The "Bunny" spine animation consists of three alternately blended layers
+  (additive, normal, and additive) to increase draw calls. By default, only the
+  normal layer is visible.
+* A "Bunny" instance is created and added to the scene in a grid (referred to as "top-bunny").
+* Each "top-bunny" has a child container (referred to as "container-in-top-bunny").
+* Each of these containers has another "Bunny" added to it (referred to as "nested-bunny").
+
+---
+
+### Actions
+
+* [Make nested expensive]
+  To make the nested bunny "expensive," an animation is played that reveals its
+  initially hidden additive blending layers.
+* [Make nsted cheap]
+  To make the nested bunny "cheap," an animation is played that hides the additive blended layers.
+* [Hide and show first rabbit]
+  Hiding and then showing the first top-rabbit forces a refresh of the renderables (nested-rabbits).
+  Without this step, the animations mentioned above (makeExpensive and makeCheap) do not play, for
+  an unknown reason.
+
+---
+
+### Results
+
+* The draw calls for the nested-bunny are still there even when it is not visible.
+  This is because the container attachment is added to the batcher regardless of
+  its alpha value.
+* The nested animations do not refresh without a forced revalidation of the parent.
+* Showing and hidding the first top-bunny when animation is in invisible state
+  brakes rendering of a nested items.
+        </p>
+    </details>
+    <code class="version">@esotericsoftware/spine-pixi-v8 (4.2.90)</code>
+    <ul class="debug-menu">
+        <li>
+            <button class="debug-button" data-action="make-expensive" class="button"
+                title="shows layers with blending for all bunnies nested in bunnies and container">Make nested
+                expensive</button>
+            <button class="debug-button" data-action="make-cheap" class="button"
+                title="hides layers with blending for all bunnies nested in bunnies and container">Make nested
+                cheap</button>
+            <button class="debug-button" data-action="show-and-hide" class="button">Hide and show first rabbit</button>
+        </li>
+    </ul>
+    <div id="app">
+        <div id="pixi-container"></div>
+    </div>
+</body>
+
+</html>
